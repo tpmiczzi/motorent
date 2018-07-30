@@ -6,4 +6,5 @@ import ua.motorent.demo.common.model.Moto;
 
 @Repository
 public interface MotoRepository extends JpaRepository<Moto, Long> {
+
 }

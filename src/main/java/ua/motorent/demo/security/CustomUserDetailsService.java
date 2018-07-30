@@ -14,7 +14,7 @@ import ua.motorent.demo.exception.ResourceNotFoundException;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Override
     @Transactional

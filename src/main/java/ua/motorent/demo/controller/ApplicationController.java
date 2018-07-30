@@ -1,5 +1,6 @@
 package ua.motorent.demo.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,16 +12,13 @@ import ua.motorent.demo.service.MotoService;
 @RestController
 @RequestMapping("/api")
 @Validated
-public class ApplicationController extends BaseController{
+public class ApplicationController extends BaseController {
 
-    private final MotoService motoService;
-
-    public ApplicationController(MotoService motoService) {
-        this.motoService = motoService;
-    }
+    @Autowired
+    private MotoService motoService;
 
     @RequestMapping(value = "/allList", method = RequestMethod.GET)
-    public ResponseEntity<ResponseDto> getAllListMoto(){
+    public ResponseEntity<ResponseDto> getAllListMoto() {
 
         return sendSuccess(motoService.getListAllMoto());
     }

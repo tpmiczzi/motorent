@@ -86,7 +86,7 @@ public class AuthController extends BaseController {
                 .fromCurrentContextPath().path("/api/users/{username}")
                 .buildAndExpand(resultUser.getUsername()).toUri();
 
-//        return sendSuccess()
-        return ResponseEntity.created(location).body("User registered successfully");
+        return sendSuccess("User registered successfully");
+//        return ResponseEntity.created(location).body("User registered successfully");
     }
 }

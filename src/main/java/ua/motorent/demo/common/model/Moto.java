@@ -26,8 +26,7 @@ public class Moto {
     public Moto() {
     }
 
-    public Moto(Long id, String name, int volume, Double price) {
-        this.id = id;
+    public Moto(String name, int volume, Double price) {
         this.name = name;
         this.volume = volume;
         this.price = price;
