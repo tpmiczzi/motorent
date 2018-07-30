@@ -1,13 +1,18 @@
-package ua.motorent.demo.common.loaddata;
+package ua.motorent.demo.common.dto;
 
-public class JwtAuthenticationResponse {
+import java.util.Date;
 
-    private String accessToken;
+public class JwtAuthenticationResponseDto {
 
     private String tokenType = "Bearer";
 
-    public JwtAuthenticationResponse(String accessToken) {
+    private String accessToken;
+
+    private Date dateCreateToken;
+
+    public JwtAuthenticationResponseDto(String accessToken, Date date) {
         this.accessToken = accessToken;
+        this.dateCreateToken = date;
     }
 
     public String getAccessToken() {
@@ -24,5 +29,13 @@ public class JwtAuthenticationResponse {
 
     public void setTokenType(String tokenType) {
         this.tokenType = tokenType;
+    }
+
+    public Date getDateCreateToken() {
+        return dateCreateToken;
+    }
+
+    public void setDateCreateToken(Date dateCreateToken) {
+        this.dateCreateToken = dateCreateToken;
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ua.motorent.demo.common.model.RoleName;
 import ua.motorent.demo.security.CustomUserDetailsService;
 import ua.motorent.demo.security.JwtAuthenticationEntryPoint;
 import ua.motorent.demo.security.JwtAuthenticationFilter;
@@ -71,27 +72,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/",
-                        "/favicon.ico",
-                        "/**/*.png",
-                        "/**/*.gif",
-                        "/**/*.svg",
-                        "/**/*.jpg",
-                        "/**/*.html",
-                        "/**/*.css",
-                        "/**/*.js")
-                .permitAll()
-                .antMatchers("/api/auth/**")
-                .permitAll()
-                .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
-                .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
-                .permitAll()
+                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/api/allList").hasAnyAuthority(RoleName.USER.toString())
                 .anyRequest()
                 .authenticated();
 
+//                    .and()
+//                .authorizeRequests()
+//                    .antMatchers("/",
+//                        "/favicon.ico",
+//                        "/**/*.png",
+//                        "/**/*.gif",
+//                        "/**/*.svg",
+//                        "/**/*.jpg",
+//                        "/**/*.html",
+//                        "/**/*.css",
+//                        "/**/*.js")
+//                        .permitAll()
+//                .antMatchers("/api/auth/**").permitAll()
+//                    .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
+//                        .permitAll()
+//
+//                .antMatchers("/api/allList").hasRole("USER")
+//                .permitAll()
+//                .anyRequest()
+//                .authenticated();
+
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
     }
 }

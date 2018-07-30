@@ -1,8 +1,8 @@
-package ua.motorent.demo.common.loaddata;
+package ua.motorent.demo.common.dto;
 
 import javax.validation.constraints.NotBlank;
 
-public class LoginRequest {
+public class LoginDto {
     @NotBlank
     private String usernameOrEmail;
 

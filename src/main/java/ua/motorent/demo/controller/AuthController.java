@@ -10,8 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ua.motorent.demo.common.dto.ResponseDto;
-import ua.motorent.demo.common.loaddata.JwtAuthenticationResponse;
-import ua.motorent.demo.common.loaddata.LoginRequest;
+import ua.motorent.demo.common.dto.JwtAuthenticationResponseDto;
+import ua.motorent.demo.common.dto.LoginDto;
 import ua.motorent.demo.common.dto.RegisterUserDto;
 import ua.motorent.demo.common.model.Role;
 import ua.motorent.demo.common.model.RoleName;
@@ -24,6 +24,7 @@ import ua.motorent.demo.security.JwtTokenProvider;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.Collections;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -45,11 +46,11 @@ public class AuthController extends BaseController {
     private JwtTokenProvider tokenProvider;
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
-    public ResponseEntity<ResponseDto> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<ResponseDto> authenticateUser(@Valid @RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsernameOrEmail(),
-                        loginRequest.getPassword()
+                        loginDto.getUsernameOrEmail(),
+                        loginDto.getPassword()
                 )
         );
 
@@ -57,7 +58,7 @@ public class AuthController extends BaseController {
 
         String jwt = tokenProvider.generateToken(authentication);
 
-        return sendSuccess(new JwtAuthenticationResponse(jwt));
+        return sendSuccess(new JwtAuthenticationResponseDto(jwt, new Date()));
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -74,7 +75,7 @@ public class AuthController extends BaseController {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
+        Role userRole = roleRepository.findByName(RoleName.USER)
                 .orElseThrow(()->new AppException("User Role not set."));
 
         user.setRoles(Collections.singleton(userRole));
