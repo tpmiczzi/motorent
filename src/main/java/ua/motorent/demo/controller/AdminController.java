@@ -22,6 +22,12 @@ public class AdminController extends BaseController {
         return sendSuccess(adminService.addMoto(motoDto));
     }
 
+    @RequestMapping(value = "/moto/{id}", method = RequestMethod.GET)
+    public ResponseEntity<ResponseDto> getMoto(@PathVariable Long id) {
+
+        return sendSuccess(adminService.getMoto(id));
+    }
+
     @RequestMapping(value = "/moto/{id}", method = RequestMethod.PUT)
     public ResponseEntity<ResponseDto> updateMoto(@PathVariable Long id,
                                                   @RequestBody MotoDto motoDto) {
@@ -29,5 +35,10 @@ public class AdminController extends BaseController {
         return sendSuccess(adminService.updateMoto(id, motoDto));
     }
 
+    @RequestMapping(value = "/moto/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<ResponseDto> deleteMoto(@PathVariable Long id) {
+        adminService.deleteMoto(id);
 
+        return sendSuccess("Moto #" + id + "delete successful");
+    }
 }

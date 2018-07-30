@@ -18,6 +18,10 @@ public class AdminService {
         return motoRepository.save(moto);
     }
 
+    public Moto getMoto(Long id){
+        return motoRepository.getOne(id);
+    }
+
     public Moto updateMoto(Long id, MotoDto motoDto){
         Moto moto = motoRepository.getOne(id);
 
@@ -34,5 +38,9 @@ public class AdminService {
         }
 
         return motoRepository.save(moto);
+    }
+
+    public void deleteMoto(Long id){
+        motoRepository.deleteById(id);
     }
 }
