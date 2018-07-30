@@ -1,5 +1,7 @@
 package ua.motorent.demo.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +31,8 @@ import java.util.Date;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController extends BaseController {
+
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -81,6 +85,8 @@ public class AuthController extends BaseController {
         user.setRoles(Collections.singleton(userRole));
 
         User resultUser = userRepository.save(user);
+
+        logger.info("=== user created - " + resultUser);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/api/users/{username}")

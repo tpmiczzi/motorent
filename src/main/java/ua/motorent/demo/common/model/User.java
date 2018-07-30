@@ -1,6 +1,7 @@
 package ua.motorent.demo.common.model;
 
 import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -20,7 +21,9 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY
+    @SequenceGenerator(allocationSize = 1, sequenceName = "user_id_seq", name = "userSeq")
+    @GeneratedValue(generator = "userSeq", strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @NotBlank

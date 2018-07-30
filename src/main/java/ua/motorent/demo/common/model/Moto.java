@@ -10,6 +10,7 @@ public class Moto {
     @Id
     @SequenceGenerator(allocationSize = 1, sequenceName = "moto_id_seq", name = "motoSeq")
     @GeneratedValue(generator = "motoSeq", strategy = GenerationType.SEQUENCE)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "name")
