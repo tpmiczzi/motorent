@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ua.motorent.demo.common.dto.MotoDto;
 import ua.motorent.demo.common.dto.ResponseDto;
+import ua.motorent.demo.exception.BusinessException;
 import ua.motorent.demo.service.AdminService;
 
 @RestController
@@ -23,14 +24,14 @@ public class AdminController extends BaseController {
     }
 
     @RequestMapping(value = "/moto/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ResponseDto> getMoto(@PathVariable Long id) {
+    public ResponseEntity<ResponseDto> getMoto(@PathVariable Long id) throws BusinessException {
 
         return sendSuccess(adminService.getMoto(id));
     }
 
     @RequestMapping(value = "/moto/{id}", method = RequestMethod.PUT)
     public ResponseEntity<ResponseDto> updateMoto(@PathVariable Long id,
-                                                  @RequestBody MotoDto motoDto) {
+                                                  @RequestBody MotoDto motoDto) throws BusinessException {
 
         return sendSuccess(adminService.updateMoto(id, motoDto));
     }
