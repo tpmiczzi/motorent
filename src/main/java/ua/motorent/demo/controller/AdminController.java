@@ -40,6 +40,6 @@ public class AdminController extends BaseController {
     public ResponseEntity<ResponseDto> deleteMoto(@PathVariable Long id) {
         adminService.deleteMoto(id);
 
-        return sendSuccess("Moto #" + id + "delete successful");
+        return sendSuccess("Moto #" + id + " delete successful");
     }
 }

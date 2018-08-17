@@ -20,20 +20,19 @@ import java.util.List;
 @ContextConfiguration
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
         DbUnitTestExecutionListener.class })
+@DatabaseSetup("classpath:db/fixture/moto.xml")
 public class MotoServiceTest extends DemoApplicationTests {
 
     @Autowired
     private MotoService motoService;
 
     @Test
-    @DatabaseSetup("classpath:db/fixture/moto.xml")
     public void getListAllMoto() {
         List<Moto> motoList = motoService.getListAllMoto();
         Assert.assertTrue(motoList.size() > 1);
     }
 
     @Test
-    @DatabaseSetup("classpath:db/fixture/moto.xml")
     public void getMoto() throws BusinessException {
         Long id = 101L;
         String checkName = "Yamaha";
