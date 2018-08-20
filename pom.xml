@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ua.moto-rent</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>motorent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -49,7 +49,6 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.2.3.Final</version>
         </dependency>
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
@@ -70,7 +69,6 @@
             <artifactId>json-path</artifactId>
             <version>2.2.0</version>
         </dependency>
-
 
         <dependency>
             <groupId>com.github.springtestdbunit</groupId>
