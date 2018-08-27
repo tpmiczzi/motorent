@@ -8,3 +8,8 @@ or
 
 mvn clean package
 docker-compose up --build
+
+
+users
+admin - Qwerty123
+user - Qwerty123

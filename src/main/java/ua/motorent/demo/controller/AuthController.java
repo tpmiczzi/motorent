@@ -1,5 +1,9 @@
 package ua.motorent.demo.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/api/auth")
+@Api(value = "authentication", description = "Authentication controller")
 public class AuthController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
@@ -49,6 +54,11 @@ public class AuthController extends BaseController {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
+    @ApiOperation(value = "Login user", response = ResponseDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully login", response = JwtAuthenticationResponseDto.class),
+            @ApiResponse(code = 401, message = "Sorry, You're not authorized to access this resource.")
+    })
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ResponseEntity<ResponseDto> authenticateUser(@Valid @RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(
@@ -65,6 +75,14 @@ public class AuthController extends BaseController {
         return sendSuccess(new JwtAuthenticationResponseDto(jwt, new Date()));
     }
 
+    @ApiOperation(value = "Registration new user", response = ResponseDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully registration"),
+            @ApiResponse(code = 400, message = "Username is already taken!"),
+            @ApiResponse(code = 400, message = "Email Address already in use!"),
+            @ApiResponse(code = 400, message = "User Role not set.")
+    }
+    )
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity registerUser(@Valid @RequestBody RegisterUserDto registerUserDto) {
         if (userRepository.existsByUsername(registerUserDto.getUsername())) {
@@ -80,7 +98,7 @@ public class AuthController extends BaseController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         Role userRole = roleRepository.findByName(RoleName.USER)
-                .orElseThrow(()->new AppException("User Role not set."));
+                .orElseThrow(() -> new AppException("User Role not set."));
 
         user.setRoles(Collections.singleton(userRole));
 
